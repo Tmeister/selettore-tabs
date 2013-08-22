@@ -11,13 +11,55 @@
 
 class TmSelettoreTabs extends PageLinesSection {
 
-	const version = '1.0';
+	var $section_name      = 'Selettore Tabs';
+    var $section_version   = '1.0';
+    var $section_key ;
+    var $chavezShop;
 
-    function section_persistent(){}
+    function section_persistent()
+    {
+        $this->section_key = strtolower( str_replace(' ', '_', $this->section_name) );
+        $this->verify_license();
+        add_filter('pl_sorted_settings_array', array(&$this, 'add_global_panel'));
+    }
 
-    // LOAD SCRIPTS
+    function verify_license(){
+        if( !class_exists( 'chavezShopVerifier' ) ) {
+            include( dirname( __FILE__ ) . '/inc/chavezshop_verifier.php' );
+        }
+        $this->chavezShop = new chavezShopVerifier( $this->section_name, $this->section_version, $this->opt('selettore_tabs_license_key') );
+    }
+
+    function add_global_panel($settings){
+        $valid = "";
+        if( get_option( $this->section_key."_activated" ) ){
+            $valid = ( $this->chavezShop->check_license() ) ? ' - Your license is valid' : ' - Your license is invalid';
+        }
+
+        if( !isset( $settings['eChavez'] ) ){
+            $settings['eChavez'] = array(
+                'name' => 'Enrique Chavez Shop',
+                'icon' => 'icon-shopping-cart',
+                'opts' => array()
+            );
+        }
+
+        $collapser_opts = array(
+            'key'   => 'selettore_tabs_license_key',
+            'type'  => 'text',
+            'title' => '<i class="icon-shopping-cart"></i> ' . __('Selettore Tabs License Key', $this->domain) . $valid,
+            'label' => __('License Key', $this->domain),
+            'help'  => __('The section is fully functional whitout a key license, this license is used only get access to autoupdates within your admin.', $this->domain)
+
+        );
+
+        array_push($settings['eChavez']['opts'], $collapser_opts);
+        return $settings;
+
+    }
+
     function section_scripts(){
-        wp_enqueue_script('script-name', $this->base_url.'/selettore-tabs.js', array('jquery'), self::version, true );
+        wp_enqueue_script('script-name', $this->base_url.'/selettore-tabs.js', array('jquery'), $this->section_version, true );
     }
 
 
@@ -65,7 +107,8 @@ class TmSelettoreTabs extends PageLinesSection {
 
    	function section_template() {
         if( !$this->opt('stabs_count') ){
-            //Create Dummy content
+            echo setup_section_notify($this, __('Please start adding some content.', 'selettore-tabs'));
+            return;
         }
     ?>
 

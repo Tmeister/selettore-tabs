@@ -67,13 +67,17 @@
                 var width = $(window).width();
                 if( width <= 760 && device != 'phone'){
                     device = 'phone';
-                    currentTab.trigger('click');
+                    if( currentTab != undefined ){
+                        currentTab.trigger('click');
+                    }
                 }
 
                 if( width > 760  && device != 'tablet'){
                     device = 'tablet';
                     $('.tab-wrapper .tab-contents', $this).hide();
-                    currentTab.trigger('click');
+                    if( currentTab != undefined ){
+                        currentTab.trigger('click');
+                    }
                 }
             });
 
