@@ -2,16 +2,16 @@
 /*
 	Section: Selettore Tabs
 	Author: Enrique Chavez
-	Author URI: http://tmeister.net
-	Description: A base section to be used to start new sections.
+	Author URI: http://enriquechavez.co
+	Description: Selettore Tabs is a "must have" section builded it using the latest DMS's improvements you can navigate through the content in a ease way using a beatiful transition effect. No more Custom Post Types, edit the content right in the page thanks to the DMS's live editing.
 	Class Name: TmSelettoreTabs
-	Demo:
+	Demo: http://dms.tmeister.net/selettore-tabs
 	Version: 1.0
 */
 
 class TmSelettoreTabs extends PageLinesSection {
 
-	var $section_name      = 'Selettore Tabs';
+    var $section_name      = 'Selettore Tabs';
     var $section_version   = '1.0';
     var $section_key ;
     var $chavezShop;
