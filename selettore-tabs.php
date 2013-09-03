@@ -10,7 +10,7 @@
 */
 
 define( 'EC_STORE_URL', 'http://enriquechavez.co' );
-add_action( 'admin_init', 'selettore_check_for_updates' );
+//add_action( 'admin_init', 'selettore_check_for_updates' );
 
 function selettore_check_for_updates(){
 	$item_name  = "Selettore Tabs";
