@@ -238,7 +238,7 @@ class TmSelettoreTabs extends PageLinesSection {
                 'key' => 'stab_h3',
                 'type' => 'template',
                 'template' => $newSetup,
-                'title' => __('Demo Content')
+                'title' => __('Demo Content', 'selettore-tabs')
             );
             array_push($opts, $box);
         }
@@ -316,12 +316,5 @@ class TmSelettoreTabs extends PageLinesSection {
         }
         return $out;
     }
+}
 
-
-
-
-
-
-
-
-} // that's it, that's the end of it. never put code past this area as it's then out of the class
