@@ -3,7 +3,7 @@
 	Section: Selettore Tabs
 	Author: Enrique Chavez
 	Author URI: http://enriquechavez.co
-	Description: Selettore Tabs is a "must have" section builded it using the latest DMS's improvements you can navigate through the content in a ease way using a beatiful transition effect. No more Custom Post Types, edit the content right in the page thanks to the DMS's live editing.
+	Description: Selettore Tabs is a must-have section. Built using the latest DMS improvements, you can navigate through the content in an easy way using a beatiful transition effect. No more Custom Post Types; edit the content right in the page thanks to the DMS' live editing.
 	Class Name: TmSelettoreTabs
 	Demo: http://dms.tmeister.net/selettore-tabs
 	Version: 1.0
@@ -143,7 +143,7 @@ class TmSelettoreTabs extends PageLinesSection {
                                     <img src="<?php echo $media ?>" alt="" data-sync="<?php echo 'stab_c_media' .$i ?>">
                                 </div>
                                 <div class="stab-details" data-sync="<?php echo 'stab_c_text' .$i ?>">
-                                    <?php echo $this->opt('stab_c_text'.$i) ? $this->opt('stab_c_text'.$i) : '<p>Please add some content, this field accepts HTML as well <a href="http://pagelines.com">PageLines</a></p>'?>
+                                    <?php echo $this->opt('stab_c_text'.$i) ? $this->opt('stab_c_text'.$i) : '<p>Please add some content, this field accepts HTML, this is a sample link <a href="http://pagelines.com">PageLines</a></p>'?>
                                 </div>
                             <?php endif ?>
 
@@ -186,7 +186,7 @@ class TmSelettoreTabs extends PageLinesSection {
                         'type' => 'count_select',
                         'count_start' => 1,
                         'count_number' => 20,
-                        'label' => __( 'How many tabs you want to show?', 'selettore-tabs')
+                        'label' => __( 'How many tabs do you want to show?', 'selettore-tabs')
                     ),
                     array(
                         'key' => 'tab_bg_color',
@@ -215,7 +215,7 @@ class TmSelettoreTabs extends PageLinesSection {
                     array(
                         'key' => 'tab_border_color',
                         'type' => 'color',
-                        'label' => __('Selected the border color', 'selettore-tabs'),
+                        'label' => __('Selected tab border color', 'selettore-tabs'),
                         'default' => '#eeeeee'
                     )
                 )
@@ -231,14 +231,14 @@ class TmSelettoreTabs extends PageLinesSection {
 
         $contentHelp = "<h6 style='padding-bottom:5px; margin-bottom:5px; border-bottom:1px solid #ccc'>". __('Tab content settings' ,'selettore-tabs') . "</h6>";
 
-        $newSetup = __('Please you need to create new tabs, You should start selecting how many tabs you want to show in the left panel.' ,'selettore-tabs');
+        $newSetup = __('Select how many tabs you want to display in the left panel.' ,'selettore-tabs');
 
         if(!$loopCount){
             $box = array(
                 'key' => 'stab_h3',
                 'type' => 'template',
                 'template' => $newSetup,
-                'title' => __('Demo content')
+                'title' => __('Demo Content')
             );
             array_push($opts, $box);
         }
