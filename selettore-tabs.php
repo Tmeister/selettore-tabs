@@ -3,14 +3,14 @@
 	Plugin Name: Selettore Tabs
 	Author: Enrique Chavez
 	Author URI: http://enriquechavez.co
-	Description: Selettore Tabs is a "must have" section builded it using the latest DMS's improvements you can navigate through the content in a ease way using a beatiful transition effect. No more Custom Post Types, edit the content right in the page thanks to the DMS's live editing.
+	Description: Selettore Tabs is a must-have section. Built using the latest DMS improvements, you can navigate through the content in an easy way using a beatiful transition effect. No more Custom Post Types; edit the content right in the page thanks to the DMS' live editing.
 	Class Name: TmselettoreTabs
 	Demo:http://dms.tmeister.net/selettore-tabs
 	Version: 1.0
 */
 
 define( 'EC_STORE_URL', 'http://enriquechavez.co' );
-add_action( 'admin_init', 'selettore_check_for_updates' );
+//add_action( 'admin_init', 'selettore_check_for_updates' );
 
 function selettore_check_for_updates(){
 	$item_name  = "Selettore Tabs";

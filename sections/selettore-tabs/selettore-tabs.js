@@ -45,10 +45,10 @@
                 $oldContent = $('.tabs-container', $this).find("[data-index='" + currentIndex + "']");
 
                 if( $oldContent.length ){
-                    $oldContent.animate({opacity: 0, marginTop: '10%'}, 250, function(){
+                    $oldContent.animate({opacity: 0, marginTop: '10%', zIndex:'1'}, 250, function(){
                         $content = $('.tabs-container', $this).find("[data-index='" + index + "']");
-                        $content.animate({opacity: 1, marginTop: '0%'}, 250, 'easeInOutExpo');
-                        $('.tabs-container', $this).animate({height: $content.height() + 20}, 250);
+                        $content.animate({opacity: 1, marginTop: '0%', zIndex: '9999'}, 250, 'easeInOutExpo');
+                        $('.tabs-container', $this).css({height: $content.height() + 20});
                     })
                 }else{
                     $content = $('.tabs-container', $this).find("[data-index='0']");
