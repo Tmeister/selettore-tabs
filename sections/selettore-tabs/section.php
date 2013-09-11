@@ -70,31 +70,29 @@ class TmSelettoreTabs extends PageLinesSection {
         <script>
             jQuery(document).ready(function($) {
 
-                jQuery('.<?php echo $this->meta['clone']?>').selettoreTabs({
-                    color : "#ff0000;"
-                });
+                jQuery('.tab<?php echo $this->meta['clone']?>').selettoreTabs();
             });
         </script>
 
         <style type="text/css">
-            .<?php echo $this->meta['clone']?> .tab-label{
+            .tab<?php echo $this->meta['clone']?> .tab-label{
                 background:  <?php echo pl_hashify($this->opt('tab_bg_color'))?>;
                 color: <?php echo pl_hashify($this->opt('tab_text_color')); ?>;
             }
 
-            .<?php echo $this->meta['clone']?> .tab-label.current{
+            .tab<?php echo $this->meta['clone']?> .tab-label.current{
                 background:  <?php echo pl_hashify($this->opt('tab_bg_color_hover'))?> !important;
                 color: <?php echo pl_hashify($this->opt('tab_text_color_hover'))?> !important;
             }
 
-            .<?php echo $this->meta['clone']?> .tabs-selector .triangle{
+            .tab<?php echo $this->meta['clone']?> .tabs-selector .triangle{
                 border-left-color: <?php echo pl_hashify($this->opt('tab_bg_color_hover'))?> !important;
             }
 
-            .<?php echo $this->meta['clone']?> .tabs-selector .tab-wrapper{
+            .tab<?php echo $this->meta['clone']?> .tabs-selector .tab-wrapper{
                 border-bottom: 1px solid <?php echo pl_hashify($this->opt('tab_border_color'))?> !important;
             }
-            .<?php echo $this->meta['clone']?> .tabs-selector .tab-wrapper:last-child{
+            .tab<?php echo $this->meta['clone']?> .tabs-selector .tab-wrapper:last-child{
                 border-bottom: 0 !important;
             }
 
@@ -114,7 +112,7 @@ class TmSelettoreTabs extends PageLinesSection {
         }
     ?>
 
-        <div class="row selettore <?php echo $this->meta['clone'];?> ">
+        <div class="row selettore tab<?php echo $this->meta['clone'];?> ">
             <div class="span3">
                 <div class="tabs-selector">
                     <?php for ($i=0; $i < $this->opt('stabs_count'); $i++): ?>
