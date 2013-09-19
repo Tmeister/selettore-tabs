@@ -6,14 +6,14 @@
     Description: Selettore Tabs is a must-have section. Built using the latest DMS improvements, you can navigate through the content in an easy way using a beatiful transition effect. No more Custom Post Types; edit the content right in the page thanks to the DMS' live editing.
     Class Name: TmSelettoreTabs
     Demo: http://dms.tmeister.net/selettore-tabs
-    Version: 1.0
+    Version: 1.1
     Loading: active
 */
 
 class TmSelettoreTabs extends PageLinesSection {
 
     var $section_name      = 'Selettore Tabs';
-    var $section_version   = '1.0';
+    var $section_version   = '1.1';
     var $section_key ;
     var $chavezShop;
 

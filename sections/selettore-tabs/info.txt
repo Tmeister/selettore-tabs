@@ -4,5 +4,8 @@ Description of your product goes here. It's what is shown on the actual store pa
 
 == Changelog ==
 
+= 1.1 =
+* navbar depth issue fixed.
+
 = 1.0 =
 * Initial release
