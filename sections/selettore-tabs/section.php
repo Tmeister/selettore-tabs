@@ -48,9 +48,9 @@ class TmSelettoreTabs extends PageLinesSection {
         $collapser_opts = array(
             'key'   => 'selettore_tabs_license_key',
             'type'  => 'text',
-            'title' => '<i class="icon-shopping-cart"></i> ' . __('Selettore Tabs License Key', $this->domain) . $valid,
-            'label' => __('License Key', $this->domain),
-            'help'  => __('The section is fully functional whitout a key license, this license is used only get access to autoupdates within your admin.', $this->domain)
+            'title' => '<i class="icon-shopping-cart"></i> ' . __('Selettore Tabs License Key', 'selettore') . $valid,
+            'label' => __('License Key', 'selettore'),
+            'help'  => __('The section is fully functional whitout a key license, this license is used only get access to autoupdates within your admin.', 'selettore')
 
         );
 
