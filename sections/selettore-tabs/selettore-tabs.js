@@ -47,7 +47,7 @@
                 if( $oldContent.length ){
                     $oldContent.animate({opacity: 0, marginTop: '10%', zIndex:'1'}, 250, function(){
                         $content = $('.tabs-container', $this).find("[data-index='" + index + "']");
-                        $content.animate({opacity: 1, marginTop: '0%', zIndex: '9999'}, 250, 'easeInOutExpo');
+                        $content.animate({opacity: 1, marginTop: '0%', zIndex: '999'}, 250, 'easeInOutExpo');
                         $('.tabs-container', $this).css({height: $content.height() + 20});
                     })
                 }else{
