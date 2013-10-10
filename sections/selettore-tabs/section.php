@@ -6,23 +6,22 @@
     Description: Selettore Tabs is a must-have section. Built using the latest DMS improvements, you can navigate through the content in an easy way using a beatiful transition effect. No more Custom Post Types; edit the content right in the page thanks to the DMS' live editing.
     Class Name: TmSelettoreTabs
     Demo: http://dms.tmeister.net/selettore-tabs
-    Version: 1.1
-    PageLines: true
+    Version: 1.2
     Loading: active
 */
 
 class TmSelettoreTabs extends PageLinesSection {
 
     var $section_name      = 'Selettore Tabs';
-    var $section_version   = '1.1';
+    var $section_version   = '1.2';
     var $section_key ;
     var $chavezShop;
 
     function section_persistent()
     {
         $this->section_key = strtolower( str_replace(' ', '_', $this->section_name) );
-        //$this->verify_license();
-        //add_filter('pl_sorted_settings_array', array(&$this, 'add_global_panel'));
+        $this->verify_license();
+        add_filter('pl_sorted_settings_array', array(&$this, 'add_global_panel'));
     }
 
     function verify_license(){
@@ -119,7 +118,7 @@ class TmSelettoreTabs extends PageLinesSection {
 
                     <div class="tab-wrapper" data-index="<?php echo $i ?>">
                         <div class="tab-label <?php echo $i == 0 ? 'current' : '' ?>">
-                            <div class="tab-icon"><i class="icon-<?php echo $this->opt('stab_icon'.$i) ? $this->opt('stab_icon'.$i) : 'move' ?>"></i></div>
+                            <div class="tab-icon"><i class="icon-<?php echo $this->opt('stab_icon'.$i) ? $this->opt('stab_icon'.$i) : 'move' ?> my-tab-icon"></i></div>
                             <span class="tab-title" data-sync="stab_icon_label<?php echo $i ?>">
                                 <?php echo $this->opt('stab_icon_label'.$i) ? $this->opt('stab_icon_label'.$i) : 'Insert your label' ?>
                             </span>
