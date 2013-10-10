@@ -7,8 +7,9 @@
         var currentIndex = null;
         var currentTab = null;
         var selettore = null;
-        var self,
-            device;
+        var transition = true;
+        var self
+        ,   device;
 
         this.each(function() {
 
@@ -27,6 +28,24 @@
 
                 $el = $(this);
                 var index = $el.data('index');
+                pass = false;
+
+                if( device == 'phone' && !transition){
+                    if( $(event.target).hasClass('tab-title') ){
+                        pass = true;
+                    }
+                    if( $(event.target).hasClass('my-tab-icon') ){
+                        pass = true;
+                    }
+                    if( $(event.target).hasClass('tab-label') ){
+                        pass = true;
+                    }
+
+                    if( ! pass ){
+                        return;
+                    }
+
+                }
 
                 if( currentTab != null ){
                     $('.tab-label', currentTab).removeClass('current');
@@ -58,6 +77,7 @@
 
                 currentTab = $el;
                 currentIndex = index;
+                transition = false;
 
 
             });
@@ -68,6 +88,7 @@
                 if( width <= 760 && device != 'phone'){
                     device = 'phone';
                     if( currentTab != undefined ){
+                        transition = true;
                         currentTab.trigger('click');
                     }
                 }
@@ -76,11 +97,12 @@
                     device = 'tablet';
                     $('.tab-wrapper .tab-contents', $this).hide();
                     if( currentTab != undefined ){
+                        transition = true;
                         currentTab.trigger('click');
                     }
                 }
             });
-
+            transition = true;
             $('.tab-wrapper:first-child', $this).trigger('click');
             $(window).trigger('resize');
 

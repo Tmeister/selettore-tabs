@@ -118,7 +118,7 @@ class TmSelettoreTabs extends PageLinesSection {
 
                     <div class="tab-wrapper" data-index="<?php echo $i ?>">
                         <div class="tab-label <?php echo $i == 0 ? 'current' : '' ?>">
-                            <div class="tab-icon"><i class="icon-<?php echo $this->opt('stab_icon'.$i) ? $this->opt('stab_icon'.$i) : 'move' ?>"></i></div>
+                            <div class="tab-icon"><i class="icon-<?php echo $this->opt('stab_icon'.$i) ? $this->opt('stab_icon'.$i) : 'move' ?> my-tab-icon"></i></div>
                             <span class="tab-title" data-sync="stab_icon_label<?php echo $i ?>">
                                 <?php echo $this->opt('stab_icon_label'.$i) ? $this->opt('stab_icon_label'.$i) : 'Insert your label' ?>
                             </span>
