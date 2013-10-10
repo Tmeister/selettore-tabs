@@ -4,6 +4,9 @@ Description of your product goes here. It's what is shown on the actual store pa
 
 == Changelog ==
 
+= 1.2 =
+* Fixed click inside tab on mobiles.
+
 = 1.1 =
 * navbar depth issue fixed.
 
