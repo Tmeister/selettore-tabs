@@ -6,14 +6,15 @@
     Description: Selettore Tabs is a must-have section. Built using the latest DMS improvements, you can navigate through the content in an easy way using a beatiful transition effect. No more Custom Post Types; edit the content right in the page thanks to the DMS' live editing.
     Class Name: TmSelettoreTabs
     Demo: http://dms.tmeister.net/selettore-tabs
-    Version: 1.2
+    Version: 1.3
     Loading: active
+    Pagelines: true
 */
 
 class TmSelettoreTabs extends PageLinesSection {
 
     var $section_name      = 'Selettore Tabs';
-    var $section_version   = '1.2';
+    var $section_version   = '1.3';
     var $section_key ;
     var $chavezShop;
 
@@ -105,50 +106,57 @@ class TmSelettoreTabs extends PageLinesSection {
 	}
 
    	function section_template() {
-        if( !$this->opt('stabs_count') ){
+
+        if( PL_CORE_VERSION <= '1.0.4' &&  !$this->opt('stabs_count')  ){
             echo setup_section_notify($this, __('Please start adding some content.', 'selettore-tabs'));
             return;
+        }
+
+        if( PL_CORE_VERSION > '1.0.4' ){
+            // MAP OLD SHIT
+            $upgrade_mapping = array(
+                'icon'        => 'stab_icon%s',
+                'icon_label'  => 'stab_icon_label%s',
+                'custom_page' => 'stab_custom_page%s',
+                'head'        => 'stab_c_head%s',
+                'subhead'     => 'stab_c_subhead%s',
+                'media'       => 'stab_c_media%s',
+                'text'        => 'stab_c_text%s',
+            );
+            $boxes     = $this->opt('stabs_count');
+            $tab_array = $this->opt('tab_array');
+            $tab_array = $this->upgrade_to_array_format_from_zero('tab_array', $tab_array, $upgrade_mapping, $boxes);
+            $i         = 0;
+            if( !is_array( $tab_array) ){
+                echo setup_section_notify($this, __('Please start adding some content.', 'selettore-tabs'));
+                return;
+            }
         }
     ?>
 
         <div class="row selettore tab<?php echo $this->meta['clone'];?> ">
             <div class="span3">
                 <div class="tabs-selector">
-                    <?php for ($i=0; $i < $this->opt('stabs_count'); $i++): ?>
-
-                    <div class="tab-wrapper" data-index="<?php echo $i ?>">
-                        <div class="tab-label <?php echo $i == 0 ? 'current' : '' ?>">
-                            <div class="tab-icon"><i class="icon-<?php echo $this->opt('stab_icon'.$i) ? $this->opt('stab_icon'.$i) : 'move' ?> my-tab-icon"></i></div>
-                            <span class="tab-title" data-sync="stab_icon_label<?php echo $i ?>">
-                                <?php echo $this->opt('stab_icon_label'.$i) ? $this->opt('stab_icon_label'.$i) : 'Insert your label' ?>
-                            </span>
-                            <div class="tab-pointer"><div class="triangle"></div></div>
-                        </div>
-                        <div class="tab-contents <?php echo (!$this->opt( 'stab_custom_page'.$i ) ) ? 'preformats' : '' ?>">
-                            <?php if ($this->opt( 'stab_custom_page'.$i ) ): ?>
-                                <?php
-                                    $page_data = get_page( $this->opt( 'stab_custom_page'.$i ) );
-                                    echo apply_filters('the_content', $page_data->post_content);
-                                ?>
-                            <?php else: ?>
-                                <h1 data-sync="<?php echo 'stab_c_head' .$i ?>">
-                                    <?php echo $this->opt('stab_c_head'.$i) ? $this->opt('stab_c_head'.$i) : 'Insert the head title' ?>
-                                </h1>
-                                <h5 data-sync="<?php echo 'stab_c_subhead' .$i ?>">
-                                   <?php echo $this->opt('stab_c_subhead'.$i) ? $this->opt('stab_c_subhead'.$i) : 'Insert subhead' ?>
-                                </h5>
-                                <div class="media">
-                                    <?php $media = $this->opt('stab_c_media'.$i) ? $this->opt('stab_c_media'.$i) : 'http://dms.tmeister.net/selettore-tabs/wp-content/uploads/sites/3/2013/08/sample.png' ?>
-                                    <img src="<?php echo $media ?>" alt="" data-sync="<?php echo 'stab_c_media' .$i ?>">
-                                </div>
-                                <div class="stab-details" data-sync="<?php echo 'stab_c_text' .$i ?>">
-                                    <?php echo $this->opt('stab_c_text'.$i) ? $this->opt('stab_c_text'.$i) : '<p>Please add some content, this field accepts HTML, this is a sample link <a href="http://pagelines.com">PageLines</a></p>'?>
-                                </div>
-                            <?php endif ?>
-
-                        </div>
-                    </div>
-                    <?php endfor; ?>
+                    <?php
+                        if( PL_CORE_VERSION > '1.0.4' ){
+                            foreach ($tab_array as $tab) {
+                                 $this->draw_tab($tab, $i++);
+                            }
+                        }else{
+                            for ($i=0; $i < $this->opt('stabs_count'); $i++){
+                                $tab = array(
+                                    'icon'        => $this->opt('stab_icon'.$i),
+                                    'icon_label'  => $this->opt('stab_icon_label'.$i),
+                                    'custom_page' => $this->opt('stab_custom_page'.$i ),
+                                    'head'        => $this->opt('stab_c_head'.$i),
+                                    'subhead'     => $this->opt('stab_c_subhead'.$i),
+                                    'media'       => $this->opt('stab_c_media'.$i),
+                                    'text'        => $this->opt('stab_c_text'.$i),
+                                );
+                                $this->draw_tab($tab, $i);
+                            }
+                        }
+                    ?>
                 </div>
             </div>
             <div class="span9">
@@ -159,6 +167,48 @@ class TmSelettoreTabs extends PageLinesSection {
 
     <?php
    	}
+
+    function draw_tab($tab, $i){
+        $old = (PL_CORE_VERSION > '1.0.4') ? false : true;
+        $tab['media'] = (PL_CORE_VERSION > '1.0.4') ? pl_array_get('media', $tab) : $tab['media'];
+        ob_start();
+    ?>
+        <div class="tab-wrapper" data-index="<?php echo $i ?>">
+            <div class="tab-label <?php echo $i == 0 ? 'current' : '' ?>">
+                <div class="tab-icon"><i class="icon-<?php echo $tab['icon'] ? $tab['icon'] : 'move' ?> my-tab-icon"></i></div>
+                <span class="tab-title" data-sync="<?php echo $old ? 'stab_icon_label'.$i : 'tab_array_item'.($i+1).'_icon_label' ?>">
+                    <?php echo $tab['icon_label'] ? $tab['icon_label'] : 'Insert your label' ?>
+                </span>
+                <div class="tab-pointer"><div class="triangle"></div></div>
+            </div>
+            <div class="tab-contents <?php echo (! $tab['custom_page'] ) ? 'preformats' : '' ?>">
+                <?php if ( $tab['custom_page'] ): ?>
+                    <?php
+                        $page_data = get_page( $tab['custom_page'] );
+                        echo apply_filters('the_content', $page_data->post_content);
+                    ?>
+                <?php else: ?>
+                    <h1 data-sync="<?php echo $old ? 'stab_c_head'.$i : 'tab_array_item'.($i+1).'_head' ?>">
+                        <?php echo $tab['head'] ? $tab['head'] : 'Insert the head title' ?>
+                    </h1>
+                    <h5 data-sync="<?php echo $old ? 'stab_c_subhead'.$i : 'tab_array_item'.($i+1).'_subhead' ?>">
+                       <?php echo $tab['subhead'] ? $tab['subhead'] : 'Insert subhead' ?>
+                    </h5>
+                    <div class="media">
+                        <?php $media = $tab['media'] ? $tab['media'] : 'http://dms.tmeister.net/selettore-tabs/wp-content/uploads/sites/3/2013/08/sample.png' ?>
+                        <img src="<?php echo $media ?>" alt="" data-sync="<?php echo $old ? 'stab_c_media'.$i : 'tab_array_item'.($i+1).'_media' ?>">
+                    </div>
+                    <div class="stab-details" data-sync="<?php echo $old ? 'stab_c_text'.$i : 'tab_array_item'.($i+1).'_text' ?>">
+                        <?php echo $tab['text'] ? $tab['text'] : '<p>Please add some content, this field accepts HTML, this is a sample link <a href="http://pagelines.com">PageLines</a></p>'?>
+                    </div>
+                <?php endif ?>
+
+            </div>
+        </div>
+    <?php
+
+        ob_end_flush();
+    }
 
 	function after_section_template($clone = null){}
 
@@ -174,7 +224,7 @@ class TmSelettoreTabs extends PageLinesSection {
 	}
 
 	function section_opts(){
-        $opts = array(
+        $options = array(
             array(
                 'key' => 'stab_multi',
                 'type' => 'multi',
@@ -220,9 +270,84 @@ class TmSelettoreTabs extends PageLinesSection {
                 )
             ),
         );
-        $opts = $this->create_tabs_settings($opts);
-		return $opts;
+
+        if( PL_CORE_VERSION > '1.0.4' ){
+            unset( $options[0]['opts'][0] );
+            $options = $this->create_accordion($options);
+        }else{
+            $options = $this->create_tabs_settings($options);
+        }
+		return $options;
 	}
+
+    function create_accordion($options){
+
+        $tabHelp = "<h6 style='padding-bottom:5px; margin-bottom:5px; border-bottom:1px solid #ccc'>". __('Tab settings' ,'selettore-tabs') . "</h6>";
+
+        $contentHelp = "<h6 style='padding-bottom:5px; margin-bottom:5px; border-bottom:1px solid #ccc'>". __('Content settings' ,'selettore-tabs') . "</h6>";
+
+        $available_pages = $this->get_pages_to_show();
+
+        $options[] = array(
+            'key'       => 'tab_array',
+            'type'      => 'accordion',
+            'col'       => 2,
+            'title'     => __('Selettore Tab Contents', 'selettore-tabs'),
+            'post_type' => 'Selettore Tab',
+            'opts'      => array(
+                array(
+                    'key'      => 'help',
+                    'type'     => 'template',
+                    'template' => $tabHelp
+                ),
+                array(
+                    'key'     => 'icon',
+                    'type'    => 'select_icon',
+                    'label'   => 'Tab icon',
+                    'default' => 'move'
+                ),
+                array(
+                    'key' => 'icon_label',
+                    'type' => 'text',
+                    'label' => 'Tab Label'
+                ),
+                array(
+                    'key' => 'stab_h2',
+                    'type' => 'template',
+                    'template' => $contentHelp
+                ),
+                array(
+                    'key' => 'head',
+                    'type' => 'text',
+                    'label' => 'Content head',
+                ),
+                array(
+                    'key' => 'subhead',
+                    'type' => 'text',
+                    'label' => 'Content subhead',
+                ),
+                 array(
+                    'key' => 'media',
+                    'type' => 'image_upload',
+                    'label' => 'Content media',
+                ),
+                 array(
+                    'key' => 'text',
+                    'type' => 'textarea',
+                    'label' => 'Content text',
+                ),
+                 array(
+                    'key' => 'custom_page',
+                    'type' => 'select',
+                    'label' => __('Select a page for content', 'selettore-tabs'),
+                    'opts' => $available_pages
+                )
+            )
+        );
+
+        return $options;
+
+    }
 
     function create_tabs_settings($opts){
         $loopCount = (  $this->opt('stabs_count') ) ? $this->opt('stabs_count') : false;
@@ -314,6 +439,44 @@ class TmSelettoreTabs extends PageLinesSection {
             $out[$page->ID] = array('name' => $page->post_title);
         }
         return $out;
+    }
+
+    // Custom Upgrate my count start in 0 not in 1.
+    function upgrade_to_array_format_from_zero( $new_key, $array, $mapping, $number ){
+        $scopes = array('local', 'type', 'global');
+        if( ! $number )
+        {
+            return $array;
+        }
+
+        if( !$array || $array == 'false' || empty( $array ) )
+        {
+            for($i = 0; $i < $number; $i++)
+            {
+                // Set up new output for viewing
+                foreach( $mapping as $new_index_key => $old_option_key ){
+                    $old_settings[ $i ][ $new_index_key ] = $this->opt( sprintf($old_option_key, $i) );
+                }
+
+                // Load up old values using cascade
+                foreach( $scopes as $scope )
+                {
+                    foreach( $mapping as $new_index_key => $old_option_key ){
+                        $upgrade_array[$scope]['item'.($i+1)][ $new_index_key ] = $this->opt( sprintf($old_option_key, $i), array('scope' => $scope) );
+                    }
+                }
+            }
+            // Setup in new format & update
+            foreach($scopes as $scope)
+            {
+                $this->opt_update( $new_key, $upgrade_array[$scope], $scope );
+            }
+            return $old_settings;
+
+
+        } else{
+            return $array;
+        }
     }
 }
 
