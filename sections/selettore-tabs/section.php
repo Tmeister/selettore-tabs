@@ -8,7 +8,6 @@
     Demo: http://dms.tmeister.net/selettore-tabs
     Version: 1.3
     Loading: active
-    Pagelines: true
 */
 
 class TmSelettoreTabs extends PageLinesSection {
@@ -21,8 +20,8 @@ class TmSelettoreTabs extends PageLinesSection {
     function section_persistent()
     {
         $this->section_key = strtolower( str_replace(' ', '_', $this->section_name) );
-        //$this->verify_license();
-        //add_filter('pl_sorted_settings_array', array(&$this, 'add_global_panel'));
+        $this->verify_license();
+        add_filter('pl_sorted_settings_array', array(&$this, 'add_global_panel'));
     }
 
     function verify_license(){

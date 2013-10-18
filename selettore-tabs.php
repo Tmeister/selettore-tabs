@@ -7,10 +7,9 @@
 	Class Name: TmselettoreTabs
 	Demo:http://dms.tmeister.net/selettore-tabs
 	Version: 1.3
-	Pagelines: true
 */
 
-//add_action( 'admin_init', 'selettore_check_for_updates' );
+add_action( 'admin_init', 'selettore_check_for_updates' );
 
 function selettore_check_for_updates(){
 	$item_name  = "Selettore Tabs";
