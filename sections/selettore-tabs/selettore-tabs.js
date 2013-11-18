@@ -19,7 +19,20 @@
             $.each($this.find('.tab-wrapper'), function(){
                 $el = $(this);
                 var $slide = $('<div class="tab-slide" data-index="'+ i++ +'" />');
-                $slide.append( $el.find('.tab-contents').clone() );
+                var $contents = $el.find('.tab-contents').clone();
+                //Find Elements with ID and add a suffix for the pl_accordion.
+                $('[id*=collapse]', $contents ).each(function(index, el) {
+                    $eId = $(el);
+                    $eId.attr('id', $eId.attr('id') + '-selettore');
+                });
+
+                $('.accordion-toggle', $contents ).each(function(index, el) {
+                    $eId = $(el);
+                    $eId.attr('href', $eId.attr('href') + '-selettore');
+                });
+
+
+                $slide.append( $contents );
                 $this.find('.tabs-container').append($slide);
             });
 
