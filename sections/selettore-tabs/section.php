@@ -6,7 +6,7 @@
     Description: Selettore Tabs is a must-have section. Built using the latest DMS improvements, you can navigate through the content in an easy way using a beatiful transition effect. No more Custom Post Types; edit the content right in the page thanks to the DMS' live editing.
     Class Name: TmSelettoreTabs
     Demo: http://dms.tmeister.net/selettore-tabs
-    Version: 1.3.3
+    Version: 1.4
     Loading: active
     PageLines: true
 */
@@ -14,7 +14,7 @@
 class TmSelettoreTabs extends PageLinesSection {
 
     var $section_name      = 'Selettore Tabs';
-    var $section_version   = '1.3.3';
+    var $section_version   = '1.4';
     var $section_key ;
     var $chavezShop;
 
@@ -171,11 +171,18 @@ class TmSelettoreTabs extends PageLinesSection {
     function draw_tab($tab, $i){
         $old = (PL_CORE_VERSION > '1.0.4') ? false : true;
         $tab['media'] = (PL_CORE_VERSION > '1.0.4') ? pl_array_get('media', $tab) : $tab['media'];
+        $tab['icon'] = (isset( $tab['icon'] ) && $tab['icon']) ? $tab['icon'] : false;
+        $tab['icon_label'] = (isset( $tab['icon_label'] ) && $tab['icon_label']) ? $tab['icon_label'] : false;
+        $tab['custom_page'] = (isset( $tab['custom_page'] ) && $tab['custom_page']) ? $tab['custom_page'] : false;
+        $tab['head'] = (isset( $tab['head'] ) && $tab['head']) ? $tab['head'] : false;
+        $tab['subhead'] = (isset( $tab['subhead'] ) && $tab['subhead']) ? $tab['subhead'] : false;
+        $tab['text'] = (isset( $tab['text'] ) && $tab['text']) ? $tab['text'] : false;
+
         ob_start();
     ?>
         <div class="tab-wrapper" data-index="<?php echo $i ?>">
             <div class="tab-label <?php echo $i == 0 ? 'current' : '' ?>">
-                <div class="tab-icon"><i class="icon-<?php echo $tab['icon'] ? $tab['icon'] : 'move' ?> my-tab-icon"></i></div>
+                <div class="tab-icon"><i class="icon icon-<?php echo $tab['icon'] ? $tab['icon'] : 'move' ?> my-tab-icon"></i></div>
                 <span class="tab-title" data-sync="<?php echo $old ? 'stab_icon_label'.$i : 'tab_array_item'.($i+1).'_icon_label' ?>">
                     <?php echo $tab['icon_label'] ? $tab['icon_label'] : 'Insert your label' ?>
                 </span>
